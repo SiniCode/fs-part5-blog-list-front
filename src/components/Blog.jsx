@@ -52,7 +52,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
 
   return (
     <div style={blogStyle}>
-      <b>{blog.title} by {blog.author}</b>
+      <b>{blog.title} by {blog.author || 'Unknown author'}</b>
       <button onClick={changeVisibility} style={buttonStyle}>{allInfo ? 'Hide' : 'Show'}</button>
       {allInfo && completeInfo()}
     </div>

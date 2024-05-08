@@ -59,6 +59,10 @@ const App = () => {
     padding: 5
   }
 
+  const messageStyle = {
+    color: 'White'
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -102,7 +106,7 @@ const App = () => {
 
   const handleDelete = (blog) => {
     const handler = async () => {
-      if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
+      if (window.confirm(`Delete ${blog.title} by ${blog.author || 'Unknown author'}?`)) {
         await blogService.deleteBlog(blog, user.token)
         const updatedBlogs = blogs.filter(b => b !== blog)
         setBlogs(updatedBlogs)
@@ -113,14 +117,10 @@ const App = () => {
   }
 
   const loginForm = () => {
-    const errorStyle = {
-      color: 'White'
-    }
-
     return (
       <div>
         <h2>Log in to see the blogs</h2>
-        <h3 style={errorStyle}><i>{message}</i></h3>
+        <h3 style={messageStyle}><i>{message}</i></h3>
         <form onSubmit={handleLogin} style={formStyle}>
           <div>
             Username:
@@ -149,18 +149,22 @@ const App = () => {
   }
 
   const handleCreate = async (blog) => {
-    const savedBlog = await blogService.createBlog({ newBlog: blog, token: user.token })
+    try {
+      const savedBlog = await blogService.createBlog({ newBlog: blog, token: user.token })
     blogFormRef.current.toggleVisibility()
-    setMessage(`${savedBlog.title} by ${savedBlog.author} was added to blog list`)
+    setMessage(
+      `${savedBlog.title} by ${savedBlog.author || 'Unknown author'} was added to blog list`
+    )
     setTimeout(() => setMessage(null), 5000)
     setBlogs(blogs.concat(savedBlog))
+    } catch (exception) {
+      setMessage('A blog must have a title and a url')
+      setTimeout(() => setMessage(null), 5000)
+    }
+    
   }
 
   const blogList = () => {
-    const successStyle = {
-      color: 'White'
-    }
-
     return(
       <div>
         <p>
@@ -170,7 +174,7 @@ const App = () => {
         <Togglable buttonLabel='Add new blog' ref={blogFormRef}>
           <NewBlogForm addBlog={handleCreate} />
         </Togglable>
-        <h3 style={successStyle}><i>{message}</i></h3>
+        <h3 style={messageStyle}><i>{message}</i></h3>
         <h2>Blogs</h2>
         {blogs.map(blog =>
           <Blog
