@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
   const [allInfo, setAllInfo] = useState(false)
@@ -35,7 +36,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
       <button onClick={deleteBlog} style={deleteStyle}>Delete blog</button>
     )
   }
-  
+
 
   const completeInfo = () => (
     <div>
@@ -56,6 +57,13 @@ const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
       {allInfo && completeInfo()}
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  likeBlog: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
+  deletable: PropTypes.bool.isRequired
 }
 
 export default Blog

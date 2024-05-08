@@ -47,11 +47,11 @@ const App = () => {
 
   const formStyle = {
     margin: 10,
-        padding: 5,
-        border: 'solid',
-        borderWidth: 1,
-        backgroundColor: 'Lavender',
-        borderRadius: 10
+    padding: 5,
+    border: 'solid',
+    borderWidth: 1,
+    backgroundColor: 'Lavender',
+    borderRadius: 10
   }
 
   const inputStyle = {
@@ -123,7 +123,7 @@ const App = () => {
         <h3 style={errorStyle}><i>{message}</i></h3>
         <form onSubmit={handleLogin} style={formStyle}>
           <div>
-            Username: 
+            Username:
             <input
               type='text'
               value={username}
@@ -133,7 +133,7 @@ const App = () => {
             />
           </div>
           <div>
-            Password: 
+            Password:
             <input
               type='password'
               value={password}
@@ -172,7 +172,7 @@ const App = () => {
         </Togglable>
         <h3 style={successStyle}><i>{message}</i></h3>
         <h2>Blogs</h2>
-        {blogs.map(blog => 
+        {blogs.map(blog =>
           <Blog
             key={blog.id}
             blog={blog}
