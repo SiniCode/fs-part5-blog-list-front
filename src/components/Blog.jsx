@@ -51,7 +51,7 @@ const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
   )
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <b>{blog.title} by {blog.author || 'Unknown author'}</b>
       <button onClick={changeVisibility} style={buttonStyle}>{allInfo ? 'Hide' : 'Show'}</button>
       {allInfo && completeInfo()}
