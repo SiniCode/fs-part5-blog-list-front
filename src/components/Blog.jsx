@@ -8,42 +8,18 @@ const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
     setAllInfo(!allInfo)
   }
 
-  const blogStyle = {
-    margin: 10,
-    padding: 10,
-    border: 'solid',
-    borderWidth: 1,
-    backgroundColor: 'Lavender',
-    borderRadius: 10
-  }
-
-  const buttonStyle = {
-    margin: 5,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: 'LightSteelBlue'
-  }
-
   const deleteButton = () => {
-    const deleteStyle = {
-      margin: 5,
-      padding: 5,
-      borderRadius: 5,
-      backgroundColor: 'LightSalmon'
-    }
-
     return (
-      <button onClick={deleteBlog} style={deleteStyle}>Delete blog</button>
+      <button onClick={deleteBlog} className='orangeButton'>Delete blog</button>
     )
   }
-
 
   const completeInfo = () => (
     <div>
       <p>Url: <a href={blog.url}>{blog.url}</a></p>
       <p>
         Likes: {blog.likes}
-        <button onClick={likeBlog} style={buttonStyle}>Like</button>
+        <button onClick={likeBlog} className='blueSideButton'>Like</button>
       </p>
       <p>User: {blog.user.name}</p>
       {deletable && deleteButton()}
@@ -51,9 +27,9 @@ const Blog = ({ blog, likeBlog, deleteBlog, deletable }) => {
   )
 
   return (
-    <div style={blogStyle} className='blog'>
+    <div className='blog'>
       <b>{blog.title} by {blog.author || 'Unknown author'}</b>
-      <button onClick={changeVisibility} style={buttonStyle}>{allInfo ? 'Hide' : 'Show'}</button>
+      <button onClick={changeVisibility} className='blueSideButton'>{allInfo ? 'Hide' : 'Show'}</button>
       {allInfo && completeInfo()}
     </div>
   )

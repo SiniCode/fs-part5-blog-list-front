@@ -27,42 +27,6 @@ const App = () => {
     }
   }, [])
 
-  const pageStyle = {
-    fontFamily: 'Arial, Helvetica, sans-serif',
-    marginLeft: 250,
-    marginRight: 250,
-    padding: 50,
-    backgroundColor: 'LightSteelBlue',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: 10
-  }
-
-  const buttonStyle = {
-    margin: 5,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: 'LightSalmon'
-  }
-
-  const formStyle = {
-    margin: 10,
-    padding: 5,
-    border: 'solid',
-    borderWidth: 1,
-    backgroundColor: 'Lavender',
-    borderRadius: 10
-  }
-
-  const inputStyle = {
-    margin: 5,
-    padding: 5
-  }
-
-  const messageStyle = {
-    color: 'White'
-  }
-
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -81,6 +45,21 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
+  }
+
+  const handleCreate = async (blog) => {
+    try {
+      const savedBlog = await blogService.createBlog({ newBlog: blog, token: user.token })
+      blogFormRef.current.toggleVisibility()
+      setMessage(
+        `${savedBlog.title} by ${savedBlog.author || 'Unknown author'} was added to blog list`
+      )
+      setTimeout(() => setMessage(null), 5000)
+      setBlogs(blogs.concat(savedBlog))
+    } catch (exception) {
+      setMessage('A blog must have a title and a url')
+      setTimeout(() => setMessage(null), 5000)
+    }
   }
 
   const handleLike = (blog) => {
@@ -120,8 +99,8 @@ const App = () => {
     return (
       <div>
         <h2>Log in to see the blogs</h2>
-        <h3 style={messageStyle}><i>{message}</i></h3>
-        <form onSubmit={handleLogin} style={formStyle}>
+        <h3 className='message'>{message}</h3>
+        <form onSubmit={handleLogin} className='loginForm'>
           <div>
             Username:
             <input
@@ -130,7 +109,6 @@ const App = () => {
               value={username}
               name='Username'
               onChange={({ target }) => setUsername(target.value)}
-              style={inputStyle}
             />
           </div>
           <div>
@@ -141,29 +119,12 @@ const App = () => {
               value={password}
               name='Password'
               onChange={({ target }) => setPassword(target.value)}
-              style={inputStyle}
             />
           </div>
-          <button type='submit' style={buttonStyle}>Log in</button>
+          <button type='submit' className='orangeButton'>Log in</button>
         </form>
       </div>
     )
-  }
-
-  const handleCreate = async (blog) => {
-    try {
-      const savedBlog = await blogService.createBlog({ newBlog: blog, token: user.token })
-    blogFormRef.current.toggleVisibility()
-    setMessage(
-      `${savedBlog.title} by ${savedBlog.author || 'Unknown author'} was added to blog list`
-    )
-    setTimeout(() => setMessage(null), 5000)
-    setBlogs(blogs.concat(savedBlog))
-    } catch (exception) {
-      setMessage('A blog must have a title and a url')
-      setTimeout(() => setMessage(null), 5000)
-    }
-    
   }
 
   const blogList = () => {
@@ -171,12 +132,12 @@ const App = () => {
       <div>
         <p>
           <b>{user.name} logged in</b>
-          <button onClick={handleLogout} style={buttonStyle}>Log out</button>
+          <button onClick={handleLogout} className='orangeButton'>Log out</button>
         </p>
         <Togglable buttonLabel='Add new blog' ref={blogFormRef}>
           <NewBlogForm addBlog={handleCreate} />
         </Togglable>
-        <h3 style={messageStyle}><i>{message}</i></h3>
+        <h3 className='message'>{message}</h3>
         <h2>Blogs</h2>
         {blogs.map(blog =>
           <Blog
@@ -192,7 +153,7 @@ const App = () => {
   }
 
   return (
-    <div style={pageStyle}>
+    <div className='content'>
       <h1>Blog List App</h1>
       {!user && loginForm()}
       {user && blogList()}

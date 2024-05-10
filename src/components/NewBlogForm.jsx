@@ -19,18 +19,6 @@ const NewBlogForm = ({ addBlog }) => {
     setUrl('')
   }
 
-  const buttonStyle = {
-    marginTop: 5,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: 'LightSteelBlue'
-  }
-
-  const inputStyle = {
-    margin: 5,
-    padding: 5
-  }
-
   return (
     <div>
       <h3>Add new blog</h3>
@@ -38,34 +26,31 @@ const NewBlogForm = ({ addBlog }) => {
                 Title:
         <input
           data-testid='title'
-          type="text"
+          type='text'
           value={title}
-          name="Title"
+          name='Title'
           onChange={event => setTitle(event.target.value)}
-          style={inputStyle}
         />
         <br />
                 Author:
         <input
           data-testid='author'
-          type="text"
+          type='text'
           value={author}
-          name="Author"
+          name='Author'
           onChange={event => setAuthor(event.target.value)}
-          style={inputStyle}
         />
         <br />
                 Url:
         <input
           data-testid='url'
-          type="text"
+          type='text'
           value={url}
-          name="Url"
+          name='Url'
           onChange={event => setUrl(event.target.value)}
-          style={inputStyle}
         />
         <br />
-        <button type='submit' style={buttonStyle}>Add blog</button>
+        <button type='submit' className='blueButton'>Add blog</button>
       </form>
     </div>
   )
