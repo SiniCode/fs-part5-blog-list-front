@@ -8,6 +8,10 @@ button {
   border-radius: 5px
 }
 
+button:hover {
+  background-color: lightgray;
+}
+
 .orangeButton {
   margin: 5px;
   background-color: lightsalmon;
